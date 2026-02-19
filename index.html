@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Maram ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body{
+margin:0;
+padding:0;
+font-family:'Cairo', sans-serif;
+background:#ffc0cb;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+.name-bg{
+position:absolute;
+color:rgba(255,255,255,0.2);
+font-size:40px;
+font-weight:bold;
+animation: moveName linear infinite;
+}
+@keyframes moveName{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-100vh);}
+}
+.heart{
+position:absolute;
+font-size:22px;
+animation: float linear infinite;
+}
+@keyframes float{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-100vh);}
+}
+.card{
+background:white;
+width:85%;
+max-width:650px;
+height:520px;
+padding:25px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 0 25px rgba(0,0,0,0.2);
+position:relative;
+z-index:10;
+overflow:hidden;
+}
+.message{
+height:400px;
+overflow-y:auto;
+text-align:right;
+line-height:2;
+padding:10px;
+font-size:16px;
+background:white;
+border-radius:10px;
+}
+input[type="password"]{
+padding:10px;
+width:60%;
+margin:15px;
+border-radius:12px;
+border:1px solid #ccc;
+font-size:16px;
+text-align:center;
+}
+button{
+padding:10px 25px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+margin:10px;
+font-size:16px;
+transition:0.3s;
+}
+button:hover{
+transform:scale(1.1);
+}
+.yes{background:#ff69b4;color:white;}
+.no{background:gray;color:white;}
+.edit-panel{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:white;
+padding:15px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,0.3);
+z-index:999;
+display:none;
+}
+</style>
+</head>
+<body>
+
+<!-- شاشة كلمة السر -->
+<div class="card" id="passwordCard">
+<h2>مستعدة؟ 😏</h2>
+<input type="password" id="passwordInput" placeholder="اكتب كلمة السر">
+<br>
+<button class="yes" onclick="checkPassword()">ادخل</button>
+</div>
+
+<!-- رسالة التهنئة -->
+<div class="card" id="introCard" style="display:none;">
+<h2>كل سنة وانتي طيبة يا روحي ❤️</h2>
+<p>رمضان كريم، انا مبسوط جدًا اني داخل رمضان ومعايا حد زيك 💖</p>
+<button class="yes" onclick="startMain()">استمر</button>
+</div>
+
+<!-- الرسالة الكبيرة -->
+<div class="card" id="content" style="display:none;" onclick="countClick()">
+<h2>💖</h2>
+<button class="yes" onclick="showMessage(event)">افتح الرسالة</button>
+</div>
+
+<!-- لوحة التعديل -->
+<div class="edit-panel" id="editPanel">
+<label>حجم الخط:</label>
+<input type="range" min="14" max="40" value="16" 
+oninput="changeSize(this.value)">
+<label>نوع الخط:</label>
+<select onchange="changeFont(this.value)">
+<option value="Cairo">Cairo</option>
+<option value="Arial">Arial</option>
+<option value="Tahoma">Tahoma</option>
+<option value="Courier New">Courier</option>
+</select>
+<br><br>
+<button onclick="saveChanges()">💾 حفظ</button>
+<button onclick="closeEdit()">❌ قفل</button>
+</div>
+
+<script>
+/* خلفيات اسم مرام */
+for(let i=0;i<25;i++){
+let name=document.createElement("div");
+name.className="name-bg";
+name.innerText="MARAM";
+name.style.left=Math.random()*100+"%";
+name.style.animationDuration=(6+Math.random()*8)+"s";
+document.body.appendChild(name);
+}
+
+/* قلوب */
+for(let i=0;i<40;i++){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"%";
+heart.style.animationDuration=(4+Math.random()*6)+"s";
+document.body.appendChild(heart);
+}
+
+/* التحقق من كلمة السر */
+function checkPassword(){
+let input = document.getElementById("passwordInput").value;
+if(input === "MERO"){
+document.getElementById("passwordCard").style.display="none";
+document.getElementById("introCard").style.display="block";
+}else{
+alert("كلمة السر خطأ 😒");
+}
+}
+
+/* الانتقال من رسالة التهنئة للصفحة الرئيسية */
+function startMain(){
+document.getElementById("introCard").style.display="none";
+document.getElementById("content").style.display="block";
+}
+
+/* فتح الرسالة الكبيرة */
+function showMessage(e){
+e.stopPropagation();
+document.getElementById("content").innerHTML=`
+<div class="message" id="messageText" contenteditable="false">
+<p>فكرة جديدة المرة دي وأكتبلك بطريقه مختلف يمكن أكون زهقتك يمكن أبقى كرنج كعادتي بس والله كل حرف جاي من قلبي بجد ده أنا على طبيعتي معاكي زي ما أنا دايما 😊</p>
+<p>يمكن إنتي عارفة قد إيه أنا مش بعرف أرتب مشاعري في كلام وقد إيه ساعات بتهرب بالهزار علشان مدخلش في جد بس الحقيقة إن معاكي بقيت بحب أواجه إحساسي ومبقتش بخاف منه و بقيت بحب اكتب رسايل كتير لحد ما انتي هتزهقي إنتي مش مجرد علاقة في حياتي ولا مرحلة وهتعدي إنتي حاجة حصلت وغيرت حاجات جوايا أنا نفسي مكنتش واخد بالي منها ولا عارف حاولت كتير اغيرها بس معرفتش غيرتي نفسيتي فعلا أنا الفترة اللي فاتت كنت تعبان شوية بسبب حوار البطولة مضغوط ومتلخبط ودماغي مش في أحسن مود وخفت أجي عليكي من غير ما أقصد خفت أزعلك أو أقلب عليكي من غير ما يكون ليكي ذنب فقولت بدل ما أسيب ده يحصل أكتبلك أقولك قد إيه وجودك هو الحاجة الوحيدة اللي بتهديني وسط اللخبطة دي إنتي لما دخلتي حياتي دخلتي بس أثرك كان كبير اووييي</p>
+<p>كنت قبلك تعبان شوية حتى لو بضحك قدام الناس كنت بضحك علشان أعدي اليوم وخلاص لكن معاكي بقيت بضحك بجد بقيت مستني المكالمة مستني الرساله بحاول اكلمك كول بأي طريقه مستني حتى هزارك السخيف اللي ساعات بيجنني بس هو نفسه اللي بيعدل مزاجي و يخليني مبسوط أنا عديت بتجارب قبل كده وحبيت قبل كده حتى لونج ديستنس كذا مرة بس عمري ما حسيت بالراحة اللي حاسسها معاكي عمري ما حسيت حب بالشكل ده...</p>
+<p>بحب فيكي حاجات كتير بحب هزارك حتى غلاستك عليا ساعات بحب برودك اللي بيستفزني شوية بس في الاخر بيضحكني بحب أسلوبك اللي بيدخل القلب من غير حاجه بحب طريقتك وإنتي بتتكلمي ضحكتك ردود فعلك العفوية وحتى صوتك واه إنتي جميلة جدا وأجمل واحده شافتها عيني فعلا ومش شايف إن في حد هييجي في يوم يبقى زيك بس الجمال مش بس في شكلك الجمال ف روحك ف قلبك ف طريقتك معايا إنتي مفيش منك اتنين نسخة واحدة بس ومكتوب عليها: ميرو نمبر وان 👆🏻❤️ بس متتغريش اوي يا مزا انتي بالنسبالي بقيتي حياتي كلها لازم اكلمك و ياه لو اتكلمنا كوول يااااه بنسا الدنيا كلها لما اسمع صوتك مش بيبان عليا بس انا بارد معلش بس عمتا انتي هتزهقي مني لاني افورت ف حوار الماسدجات دي ووهتحسي ب ملل بس متقلقيش هجيب اخرك 🥸و هقرفك ف حياتك و هخليكي تزهقي من الدنيا هعععععععع بس هعيشك احلى ايام ف حياتك 🫶يا حياتي بحبك يا نور عيني يا احلى حاجه ف حياتي</p>
+</div>
+`;
+}
+
+/* وضع التعديل السري */
+let clickCount = 0;
+function countClick(){
+clickCount++;
+let msg = document.getElementById("messageText");
+if(clickCount >= 10){
+document.getElementById("editPanel").style.display = "block";
+if(msg) msg.setAttribute("contenteditable","true");
+clickCount = 0;
+}
+}
+
+function changeSize(size){
+let msg = document.getElementById("messageText");
+if(msg) msg.style.fontSize = size + "px";
+}
+
+function changeFont(font){
+let msg = document.getElementById("messageText");
+if(msg) msg.style.fontFamily = font;
+}
+
+function saveChanges(){
+let msg = document.getElementById("messageText");
+if(msg){
+localStorage.setItem("savedMessage", msg.innerHTML);
+alert("تم الحفظ ✅");
+}
+}
+
+function closeEdit(){
+document.getElementById("editPanel").style.display = "none";
+let msg = document.getElementById("messageText");
+if(msg) msg.setAttribute("contenteditable","false");
+}
+
+/* حفظ الرسالة عند إعادة تحميل الصفحة */
+window.onload = function(){
+let saved = localStorage.getItem("savedMessage");
+if(saved){
+showMessage(new Event("click"));
+setTimeout(()=>{
+let msg = document.getElementById("messageText");
+if(msg) msg.innerHTML = saved;
+},100);
+}
+}
+</script>
+</body>
+</html>
